@@ -25,7 +25,7 @@ class JournalDeBord
     /**
      * @ORM\Column(type="text")
      */
-    private $coprs;
+    private $corps;
 
     public function getId(): ?int
     {
@@ -44,14 +44,14 @@ class JournalDeBord
         return $this;
     }
 
-    public function getCoprs(): ?string
+    public function getCorps(): ?string
     {
-        return $this->coprs;
+        return $this->corps;
     }
 
-    public function setCoprs(string $coprs): self
+    public function setCorps(string $corps): self
     {
-        $this->coprs = $coprs;
+        $this->coprs = $corps;
 
         return $this;
     }
