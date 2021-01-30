@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\JournalDeBordRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=JournalDeBordRepository::class)
+ * @UniqueEntity(fields="date", message="Un seul message par jour")
  */
 class JournalDeBord
 {
@@ -18,14 +21,14 @@ class JournalDeBord
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", unique=true)
      */
     private $date;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $corps;
+    private $contenu;
 
     public function getId(): ?int
     {
@@ -44,14 +47,14 @@ class JournalDeBord
         return $this;
     }
 
-    public function getCorps(): ?string
+    public function getContenu(): ?string
     {
-        return $this->corps;
+        return $this->contenu;
     }
 
-    public function setCorps(string $corps): self
+    public function setContenu(string $contenu): self
     {
-        $this->coprs = $corps;
+        $this->contenu = $contenu;
 
         return $this;
     }

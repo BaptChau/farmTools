@@ -3,9 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\JournalDeBord;
+use App\Repository\JournalDeBordRepository;
+use DateTime as GlobalDateTime;
+use DateTimeZone;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,29 +31,53 @@ class FarmToolsController extends AbstractController
     /**
      * @Route("/journal-de-bord/write", name="journal_de_bord_new")
      */
-    public function journalDeBordNew(Request $request): Response
+    public function journalDeBordNew(Request $request, EntityManagerInterface $em): Response
     {
         $jdb = new JournalDeBord();
-        $jdb->setDate(new \DateTime());
 
         $form = $this->createFormBuilder($jdb)
-                ->add('corps',TextareaType::class,[
-                    'label' => 'Qu\'ai je fais aujourd\'hui ?',
+                ->add('contenu',TextareaType::class,[
+                    'label'=>'Qu\'ai je fais aujour\'hui ?',
                     'attr'=>[
-                        'require'=>true,
-                        'class'=>'form-control'
+                        'required'=>true,
+                        'class'=> 'form-control'
                     ]
                 ])
                 ->add('save',SubmitType::class,[
-                    'label'=>'Ajouter au journal',
                     'attr'=>[
-
-                        'class'=>'btn btn-primary'
+                        'class'=> 'btn btn-primary'
                     ]
-                    ])
+                ])
+                
                 ->getForm();
+
+                $form->handleRequest($request);
+
+                if($form->isSubmitted() && $form->isValid()){
+                    $jdb = $form->getData();
+                    $jdb->setDate(new GlobalDateTime('now',new DateTimeZone('Europe/Paris')));
+                    dump($jdb);
+                    $em->persist($jdb);
+                    $em->flush();
+
+                }
+            
         return $this->render('farm_tools/journal_de_bord_new.html.twig', [
             'form'=>$form->createView()
         ]);
+    }
+
+
+    /**
+     * @Route("/journal-de-bord")
+     */
+    public function journalDeBordIndex(JournalDeBordRepository $journalDeBordRepository)
+    {
+        $jdb = $journalDeBordRepository->findAll();
+
+        return $this->render('farm_tools/journal_de_bord_index.html.twig',[
+            'data' => $jdb
+        ]);
+
     }
 }

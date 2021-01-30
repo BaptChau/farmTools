@@ -3,7 +3,7 @@
 {% block body %}
 
 <div class="container">
-    <h2> Ajourd'hui nous sommes le {{ "now" | date("m/d/y", "Europe/Paris")}} </h2>
+    <h2> Ajourd'hui nous sommes le {{ "now" | date("d/m/y", "Europe/Paris")}} </h2>
 
     <a href="{{ path('journal_de_bord_new') }}" class="btn btn-success"> Ecrire dans le journal de bord </a>
 </div>

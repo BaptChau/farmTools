@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<table class="table">
+    {% for day in data %}
+
+    <tr>
+        <td>{{ day.date | date("d/m/y") }}</td>
+        <td>{{day.contenu}}</td>
+        <td> <a href="#" class="btn btn-warning"> modifier </a> </td>
+    </tr>
+
+
+    {% endfor %}
+</table>
+{% endblock %}
