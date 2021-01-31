@@ -1,17 +1,27 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheet %}
+<style>
+    #calendar{
+        width: 80%;
+        margin: auto;
+    }
+</style>
+{% endblock %}
 {% block body %}
 
-<table class="table">
-    {% for day in data %}
+    <div id="calendar">
+    
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        window.onload = () => {
+            let calendarEl = document.querySelector("#calendar");
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth'
+            })
 
-    <tr>
-        <td>{{ day.date | date("d/m/y") }}</td>
-        <td>{{day.contenu}}</td>
-        <td> <a href="#" class="btn btn-warning"> modifier </a> </td>
-    </tr>
-
-
-    {% endfor %}
-</table>
+            calendar.render()
+        }
+    </script>
 {% endblock %}
