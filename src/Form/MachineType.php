@@ -21,14 +21,14 @@ class MachineType extends AbstractType
                     'class'=> 'form-control',
                     'required'=>true
                 ],
-                'label'=> 'Libellé du type de la machine'
+                'label'=> 'Marque de la machine'
             ])
             ->add('modele', TextType::class,[
                 'attr'=>[
                     'class'=> 'form-control',
                     'required'=>true
                 ],
-                'label'=> 'Libellé du type de la machine'
+                'label'=> 'Modéle de la machine'
             ])
             ->add('nb_heure', NumberType::class, [
                 'label'=> 'Nombre d\'heure de la machine',
@@ -40,7 +40,7 @@ class MachineType extends AbstractType
             ->add('type', EntityType::class,[
                 'class'=> EntityMachineType::class,
                 'choice_label'=>function(EntityMachineType $machineType){
-                    return sprintf('(%s) => %s', $machineType->getLibelle(),$machineType->getId());
+                    return sprintf('%s', $machineType->getLibelle(),$machineType->getId());
                 }
             ])
         ;
