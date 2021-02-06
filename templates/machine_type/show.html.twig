@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MachineType{% endblock %}
+
+{% block body %}
+    <h1>MachineType</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ machine_type.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ machine_type.libelle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('machine_type_index') }}">back to list</a>
+
+    <a href="{{ path('machine_type_edit', {'id': machine_type.id}) }}">edit</a>
+
+    {{ include('machine_type/_delete_form.html.twig') }}
+{% endblock %}

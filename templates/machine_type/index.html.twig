@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MachineType index{% endblock %}
+
+{% block body %}
+    <h1>MachineType index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for machine_type in machine_types %}
+            <tr>
+                <td>{{ machine_type.id }}</td>
+                <td>{{ machine_type.libelle }}</td>
+                <td>
+                    <a href="{{ path('machine_type_show', {'id': machine_type.id}) }}">show</a>
+                    <a href="{{ path('machine_type_edit', {'id': machine_type.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('machine_type_new') }}">Create new</a>
+{% endblock %}
