@@ -69,14 +69,28 @@ class FarmToolsController extends AbstractController
 
 
     /**
-     * @Route("/journal-de-bord")
+     * @Route("/journal-de-bord", name="journal_de_bord_index")
      */
     public function journalDeBordIndex(JournalDeBordRepository $journalDeBordRepository)
     {
         $jdb = $journalDeBordRepository->findAll();
 
+        $hist = [];
+
+        foreach ($jdb as $day) {
+            $hist[] = [
+                'id'=> $day->getId(),
+                'title'=> 'Activité du '.$day->getDate()->format('d/m/y'),
+                'start'=>$day->getDate()->format('Y-m-d H:i:s'),
+                'end'=>$day->getDate()->format('Y-m-d H:i:s'),
+                'description'=>$day->getContenu(),
+                'allDay'=>true,
+            ];
+        }
+
+        $data = json_encode($hist);
         return $this->render('farm_tools/journal_de_bord_index.html.twig',[
-            'data' => $jdb
+            'data'=>$data
         ]);
 
     }
