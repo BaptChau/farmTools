@@ -24,7 +24,8 @@ class Machine
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=55)
+     * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="machinesByMarque")
+     * @ORM\Column(nullable=false)
      */
     private $marque;
 
@@ -55,12 +56,12 @@ class Machine
         return $this;
     }
 
-    public function getMarque(): ?string
+    public function getMarque(): ?Marque
     {
         return $this->marque;
     }
 
-    public function setMarque(string $marque): self
+    public function setMarque(?Marque $marque): self
     {
         $this->marque = $marque;
 
